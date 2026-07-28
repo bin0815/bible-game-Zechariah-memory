@@ -9,7 +9,7 @@
 
 
 <title>
-撒迦利亞異象翻牌對對看 v1.1
+撒迦利亞異象翻牌對對看 v1.1.1
 </title>
 
 
@@ -26,13 +26,11 @@ body{
 margin:0;
 
 font-family:
-
 "Noto Sans TC",
 "Microsoft JhengHei",
 sans-serif;
 
 background:
-
 linear-gradient(
 #90caf9,
 #fff8e1
@@ -62,15 +60,15 @@ padding:15px;
 
 h1{
 
-color:#8b4513;
+font-size:clamp(26px,6vw,42px);
 
-font-size:clamp(28px,5vw,42px);
+color:#8b4513;
 
 }
 
 
 
-.card{
+.box{
 
 background:white;
 
@@ -81,17 +79,15 @@ padding:20px;
 margin:20px 0;
 
 box-shadow:
-
 0 5px 15px rgba(0,0,0,.15);
 
 }
 
 
 
-
 button{
 
-border:none;
+border:0;
 
 border-radius:30px;
 
@@ -99,19 +95,9 @@ padding:15px 25px;
 
 font-size:20px;
 
-margin:10px;
+margin:8px;
 
 cursor:pointer;
-
-background:#ffca28;
-
-}
-
-
-
-button:hover{
-
-transform:scale(1.05);
 
 }
 
@@ -124,11 +110,13 @@ background:#81c784;
 }
 
 
+
 .normal{
 
 background:#64b5f6;
 
 }
+
 
 
 .hard{
@@ -147,6 +135,7 @@ display:none;
 
 
 
+
 .info{
 
 font-size:20px;
@@ -157,9 +146,7 @@ line-height:1.8;
 
 
 
-
 /* 遊戲資訊 */
-
 
 .status{
 
@@ -167,28 +154,44 @@ display:flex;
 
 justify-content:space-around;
 
-font-size:20px;
-
 flex-wrap:wrap;
+
+font-size:20px;
 
 }
 
 
 
 
-/* 卡牌區 */
 
+/* 卡牌區 */
 
 #board{
 
 
 display:grid;
 
-gap:clamp(8px,2vw,15px);
 
-justify-content:center;
+/*
+自動依螢幕寬度調整
+*/
 
-margin-top:20px;
+grid-template-columns:
+
+repeat(
+auto-fit,
+minmax(75px,1fr)
+);
+
+
+gap:12px;
+
+
+width:100%;
+
+max-width:850px;
+
+margin:auto;
 
 
 }
@@ -197,15 +200,14 @@ margin-top:20px;
 
 /* 卡牌 */
 
+
 .memory-card{
 
 
-width:clamp(65px,18vw,120px);
-
-height:clamp(85px,22vw,150px);
+position:relative;
 
 
-perspective:800px;
+aspect-ratio:3/4;
 
 
 cursor:pointer;
@@ -215,39 +217,9 @@ cursor:pointer;
 
 
 
-.card-inner{
+/* 卡背 */
 
-
-width:100%;
-
-height:100%;
-
-
-position:relative;
-
-
-transition:.6s;
-
-
-transform-style:preserve-3d;
-
-
-}
-
-
-
-.memory-card.open .card-inner{
-
-
-transform:rotateY(180deg);
-
-
-}
-
-
-
-.card-front,
-.card-back{
+.cover{
 
 
 position:absolute;
@@ -258,10 +230,53 @@ width:100%;
 height:100%;
 
 
-border-radius:18px;
+background:#1565c0;
+
+
+border-radius:15px;
 
 
 display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+font-size:clamp(35px,8vw,65px);
+
+
+color:white;
+
+
+}
+
+
+
+/* 卡片內容 */
+
+
+.content{
+
+
+position:absolute;
+
+
+width:100%;
+
+height:100%;
+
+
+background:white;
+
+
+border-radius:15px;
+
+
+border:3px solid #ffca28;
+
+
+display:none;
 
 
 align-items:center;
@@ -273,84 +288,66 @@ justify-content:center;
 flex-direction:column;
 
 
-backface-visibility:hidden;
+}
 
 
-font-size:clamp(14px,3vw,22px);
 
+.content .icon{
+
+
+font-size:
+
+clamp(30px,8vw,65px);
+
+}
+
+
+
+.content .name{
+
+
+font-size:
+
+clamp(12px,3vw,20px);
+
+
+margin-top:8px;
 
 }
 
 
 
 
-.card-front{
+.memory-card.open .cover{
 
-
-background:#1565c0;
-
-color:white;
-
-
-font-size:clamp(35px,8vw,70px);
-
+display:none;
 
 }
 
 
 
+.memory-card.open .content{
 
-.card-back{
-
-
-background:white;
-
-
-border:3px solid #ffca28;
-
-
-transform:rotateY(180deg);
-
+display:flex;
 
 }
 
 
 
-.card-back .pic{
-
-
-font-size:clamp(35px,8vw,70px);
-
-}
-
-
-
-.card-back .name{
-
-
-font-size:clamp(12px,3vw,20px);
-
-margin-top:5px;
-
-
-}
-
-
-
-.match .card-back{
-
+.memory-card.match .content{
 
 background:#c8e6c9;
 
+animation:
 
-animation:shine .8s;
-
+success .8s;
 
 }
 
 
 
-@keyframes shine{
+
+@keyframes success{
 
 
 50%{
@@ -365,8 +362,6 @@ transform:scale(1.1);
 
 
 
-/* 教學提示 */
-
 
 .lesson{
 
@@ -379,31 +374,19 @@ padding:15px;
 
 font-size:18px;
 
-line-height:1.7;
+line-height:1.8;
 
-margin-top:15px;
 
 }
-
 
 
 
 .badge{
 
-
 font-size:70px;
 
 }
 
-
-
-footer{
-
-margin:30px;
-
-color:#777;
-
-}
 
 
 </style>
@@ -415,20 +398,16 @@ color:#777;
 <body>
 
 
-
 <div class="container">
 
 
-
 <h1>
-
 🌟 撒迦利亞異象翻牌對對看 🌟
-
 </h1>
 
 
 
-<div id="home" class="card">
+<div id="home" class="box">
 
 
 <div style="font-size:80px">
@@ -440,47 +419,36 @@ color:#777;
 
 
 <h2>
-
 撒迦利亞書 1–8章
-
 </h2>
 
 
 
 <p class="info">
 
-跟著撒迦利亞先知，
+找到相同的異象圖片！
 
 <br>
 
-認識神給他的異象。
-
-<br><br>
-
-找到一樣的圖案！
+認識神給撒迦利亞的信息。
 
 </p>
 
 
 
-
 <h3>
-
-選擇遊戲難度
-
+選擇難度
 </h3>
 
 
-
 <button class="easy"
-
 onclick="startGame('easy')">
 
 🟢 初級
 
 <br>
 
-6組圖片
+6組
 
 </button>
 
@@ -489,16 +457,14 @@ onclick="startGame('easy')">
 <br>
 
 
-
 <button class="normal"
-
 onclick="startGame('normal')">
 
 🟡 中級
 
 <br>
 
-10組圖片
+10組
 
 </button>
 
@@ -507,26 +473,20 @@ onclick="startGame('normal')">
 <br>
 
 
-
 <button class="hard"
-
 onclick="startGame('hard')">
 
 🔴 高級
 
 <br>
 
-15組圖片
+15組
 
 </button>
 
 
 
 </div>
-
-
-
-
 
 
 
@@ -535,62 +495,39 @@ onclick="startGame('hard')">
 <div id="game" class="hidden">
 
 
-
-<div class="card status">
+<div class="box status">
 
 
 <div>
-
-⭐ 分數
-
-<br>
-
+⭐
 <span id="score">
-
 0
-
 </span>
-
 </div>
 
 
+
 <div>
-
-⏱️ 時間
-
-<br>
-
+⏱️
 <span id="time">
-
 0
-
 </span>
-
 秒
-
 </div>
+
 
 
 <div>
-
-🏆 找到
-
-<br>
-
+🏆
 <span id="found">
-
 0
-
 </span>
-
 組
-
 </div>
 
 
 
 </div>
-
 
 
 
@@ -601,13 +538,9 @@ onclick="startGame('hard')">
 
 
 
-
-
 <div id="lesson">
 
 </div>
-
-
 
 
 
@@ -618,45 +551,26 @@ onclick="startGame('hard')">
 </button>
 
 
-
 </div>
 
 
 
 
 
-
-
-
-
-<div id="result" class="card hidden">
+<div id="result" class="box hidden">
 
 
 <div class="badge">
-
 🏆
-
 </div>
 
 
 <h2>
-
-🎉 完成冒險！
-
+🎉 完成！
 </h2>
 
 
-
-<p>
-
-你認識了撒迦利亞1-8章的重要異象！
-
-</p>
-
-
-
-<div id="finalLesson"
-
+<div id="finalText"
 class="lesson">
 
 </div>
@@ -670,20 +584,8 @@ class="lesson">
 </button>
 
 
-
 </div>
 
-
-
-
-
-
-
-<footer>
-
-主日學教材｜撒迦利亞書
-
-</footer>
 
 
 </div>
@@ -691,75 +593,62 @@ class="lesson">
 <script>
 
 
-// ===============================
-// 撒迦利亞書 1-8章 圖片資料
+// ================================
+// 撒迦利亞書 1-8章 異象資料
 // 圖片配圖片模式
-// ===============================
+// ================================
 
 
-const bibleData = {
+const data = {
 
 
 easy:[
 
-
 {
 icon:"🐴",
 name:"四匹馬",
-lesson:
-"撒迦利亞第一個異象：神正在觀看全地，祂沒有忘記祂的百姓。",
-verse:
-"撒迦利亞書 1:3"
+lesson:"神正在觀看全地，沒有忘記祂的百姓。",
+verse:"撒迦利亞書 1章"
 },
 
 
 {
 icon:"🕯️",
 name:"金燈台",
-lesson:
-"神提醒所羅巴伯，完成工作不是靠人的力量，而是靠神的靈。",
-verse:
-"撒迦利亞書 4:6"
+lesson:"不是倚靠勢力，不是倚靠才能，乃是倚靠我的靈。",
+verse:"撒迦利亞書 4:6"
 },
 
 
 {
 icon:"👕",
 name:"約書亞祭司",
-lesson:
-"神潔淨約書亞，代表神赦免人的罪。",
-verse:
-"撒迦利亞書 3章"
+lesson:"神潔淨約書亞，也赦免人的罪。",
+verse:"撒迦利亞書 3章"
 },
 
 
 {
 icon:"🏙️",
 name:"量耶路撒冷",
-lesson:
-"神要保護耶路撒冷，祂與百姓同在。",
-verse:
-"撒迦利亞書 2章"
+lesson:"神要保護祂的百姓。",
+verse:"撒迦利亞書 2章"
 },
 
 
 {
 icon:"📜",
 name:"飛行書卷",
-lesson:
-"神提醒百姓離開罪惡，活出聖潔。",
-verse:
-"撒迦利亞書 5章"
+lesson:"神提醒百姓離開罪惡。",
+verse:"撒迦利亞書 5章"
 },
 
 
 {
 icon:"🙏",
-name:"回轉神",
-lesson:
-"神呼召百姓回到祂面前。",
-verse:
-"撒迦利亞書 1:3"
+name:"回轉歸神",
+lesson:"神呼召百姓回到祂面前。",
+verse:"撒迦利亞書 1:3"
 }
 
 
@@ -769,11 +658,10 @@ verse:
 
 normal:[
 
-
 {
 icon:"🐴",
 name:"四匹馬",
-lesson:"神巡視全地，看顧祂的百姓。",
+lesson:"神巡視全地。",
 verse:"撒迦利亞書1章"
 },
 
@@ -781,7 +669,7 @@ verse:"撒迦利亞書1章"
 {
 icon:"🔨",
 name:"四角四匠",
-lesson:"神勝過傷害祂百姓的力量。",
+lesson:"神勝過敵人的力量。",
 verse:"撒迦利亞書1章"
 },
 
@@ -789,7 +677,7 @@ verse:"撒迦利亞書1章"
 {
 icon:"📏",
 name:"準繩量城",
-lesson:"神要建造並保護耶路撒冷。",
+lesson:"神建造並保護耶路撒冷。",
 verse:"撒迦利亞書2章"
 },
 
@@ -797,7 +685,7 @@ verse:"撒迦利亞書2章"
 {
 icon:"👕",
 name:"約書亞祭司",
-lesson:"神除去人的污穢，使人重新站立。",
+lesson:"神除去罪污。",
 verse:"撒迦利亞書3章"
 },
 
@@ -805,7 +693,7 @@ verse:"撒迦利亞書3章"
 {
 icon:"🕯️",
 name:"金燈台",
-lesson:"不是倚靠勢力，不是倚靠才能，乃是倚靠神的靈。",
+lesson:"靠神的靈完成工作。",
 verse:"撒迦利亞書4:6"
 },
 
@@ -813,7 +701,7 @@ verse:"撒迦利亞書4:6"
 {
 icon:"📜",
 name:"飛行書卷",
-lesson:"神審判罪惡。",
+lesson:"神除去罪惡。",
 verse:"撒迦利亞書5章"
 },
 
@@ -821,7 +709,7 @@ verse:"撒迦利亞書5章"
 {
 icon:"⚱️",
 name:"量器婦人",
-lesson:"神除去邪惡。",
+lesson:"邪惡被除去。",
 verse:"撒迦利亞書5章"
 },
 
@@ -829,7 +717,7 @@ verse:"撒迦利亞書5章"
 {
 icon:"🚗",
 name:"四輛戰車",
-lesson:"神掌管列國。",
+lesson:"神掌管萬國。",
 verse:"撒迦利亞書6章"
 },
 
@@ -844,8 +732,8 @@ verse:"撒迦利亞書6章"
 
 {
 icon:"❤️",
-name:"真實敬拜",
-lesson:"神喜愛公平、公義和憐憫。",
+name:"憐憫公義",
+lesson:"神喜愛真實的敬拜。",
 verse:"撒迦利亞書7章"
 }
 
@@ -854,15 +742,14 @@ verse:"撒迦利亞書7章"
 
 
 
-
 hard:[
 
 
 {
 icon:"🐴",
-name:"第一異象 四匹馬",
-lesson:"神巡視全地。",
-verse:"撒迦利亞1章"
+name:"四匹馬",
+lesson:"神看顧全地。",
+verse:"撒迦利亞書1章"
 },
 
 
@@ -870,7 +757,7 @@ verse:"撒迦利亞1章"
 icon:"🔨",
 name:"四角四匠",
 lesson:"神拆毀敵人的力量。",
-verse:"撒迦利亞1章"
+verse:"撒迦利亞書1章"
 },
 
 
@@ -878,15 +765,15 @@ verse:"撒迦利亞1章"
 icon:"📏",
 name:"準繩量城",
 lesson:"神保護耶路撒冷。",
-verse:"撒迦利亞2章"
+verse:"撒迦利亞書2章"
 },
 
 
 {
 icon:"👕",
 name:"約書亞祭司",
-lesson:"神潔淨罪污。",
-verse:"撒迦利亞3章"
+lesson:"神使人重新潔淨。",
+verse:"撒迦利亞書3章"
 },
 
 
@@ -894,15 +781,15 @@ verse:"撒迦利亞3章"
 icon:"🕯️",
 name:"金燈台",
 lesson:"不是倚靠勢力，乃是倚靠我的靈。",
-verse:"撒迦利亞4:6"
+verse:"撒迦利亞書4:6"
 },
 
 
 {
 icon:"👤",
 name:"所羅巴伯",
-lesson:"神使用他完成聖殿工作。",
-verse:"撒迦利亞4章"
+lesson:"神使用他完成聖殿。",
+verse:"撒迦利亞書4章"
 },
 
 
@@ -910,31 +797,31 @@ verse:"撒迦利亞4章"
 icon:"📜",
 name:"飛行書卷",
 lesson:"神除去罪惡。",
-verse:"撒迦利亞5章"
+verse:"撒迦利亞書5章"
 },
 
 
 {
 icon:"⚱️",
 name:"量器婦人",
-lesson:"邪惡被除去。",
-verse:"撒迦利亞5章"
+lesson:"邪惡離開百姓。",
+verse:"撒迦利亞書5章"
 },
 
 
 {
 icon:"🚗",
 name:"四輛戰車",
-lesson:"神管理世界。",
-verse:"撒迦利亞6章"
+lesson:"神掌管列國。",
+verse:"撒迦利亞書6章"
 },
 
 
 {
 icon:"🏛️",
-name:"聖殿重建",
+name:"聖殿",
 lesson:"神與百姓同工。",
-verse:"撒迦利亞6章"
+verse:"撒迦利亞書6章"
 },
 
 
@@ -942,7 +829,7 @@ verse:"撒迦利亞6章"
 icon:"🙏",
 name:"禁食",
 lesson:"神看重真心順服。",
-verse:"撒迦利亞7章"
+verse:"撒迦利亞書7章"
 },
 
 
@@ -950,23 +837,23 @@ verse:"撒迦利亞7章"
 icon:"🤝",
 name:"彼此相愛",
 lesson:"神要百姓行憐憫。",
-verse:"撒迦利亞7章"
+verse:"撒迦利亞書7章"
 },
 
 
 {
 icon:"🌱",
-name:"重新結果子",
-lesson:"神賜下祝福。",
-verse:"撒迦利亞8章"
+name:"祝福",
+lesson:"神使荒涼之地重新結果子。",
+verse:"撒迦利亞書8章"
 },
 
 
 {
 icon:"😊",
-name:"歡樂城市",
+name:"歡樂",
 lesson:"神使百姓重新喜樂。",
-verse:"撒迦利亞8章"
+verse:"撒迦利亞書8章"
 },
 
 
@@ -974,9 +861,8 @@ verse:"撒迦利亞8章"
 icon:"⭐",
 name:"神的應許",
 lesson:"神永遠信實。",
-verse:"撒迦利亞8章"
+verse:"撒迦利亞書8章"
 }
-
 
 ]
 
@@ -986,12 +872,13 @@ verse:"撒迦利亞8章"
 
 
 
-// ===============================
+
+// ================================
 // 遊戲變數
-// ===============================
+// ================================
 
 
-let currentLevel="easy";
+let level="easy";
 
 let cards=[];
 
@@ -1001,40 +888,39 @@ let second=null;
 
 let lock=false;
 
+let found=0;
 
 let score=0;
 
-let found=0;
+let time=0;
 
-let timer=0;
-
-let timerID;
+let timer=null;
 
 
 
 
-// ===============================
+
+// ================================
 // 開始遊戲
-// ===============================
+// ================================
 
 
-function startGame(level){
+function startGame(l){
 
 
-currentLevel=level;
+level=l;
 
 
 document.getElementById("home")
-.style.display="none";
+.classList.add("hidden");
 
 
 document.getElementById("game")
-.style.display="block";
+.classList.remove("hidden");
 
 
 
-createGame();
-
+createCards();
 
 
 }
@@ -1045,19 +931,17 @@ createGame();
 
 
 
-function createGame(){
+function createCards(){
 
 
+clearInterval(timer);
 
-clearInterval(timerID);
-
-
-
-score=0;
 
 found=0;
 
-timer=0;
+score=0;
+
+time=0;
 
 
 document.getElementById("score").innerHTML=0;
@@ -1068,50 +952,31 @@ document.getElementById("time").innerHTML=0;
 
 
 
-let source=bibleData[currentLevel];
+let list=data[level];
 
 
 
-let selected=[...source];
+cards=[];
 
 
 
-let pair=[];
+list.forEach((item,index)=>{
 
 
+cards.push({
 
-selected.forEach((item,index)=>{
+...item,
 
-
-// 兩張完全相同圖片
-
-
-pair.push({
-
-id:index,
-
-icon:item.icon,
-
-name:item.name,
-
-lesson:item.lesson,
-
-verse:item.verse
+id:index
 
 });
 
 
-pair.push({
+cards.push({
 
-id:index,
+...item,
 
-icon:item.icon,
-
-name:item.name,
-
-lesson:item.lesson,
-
-verse:item.verse
+id:index
 
 });
 
@@ -1120,20 +985,21 @@ verse:item.verse
 
 
 
-cards=shuffle(pair);
+cards=shuffle(cards);
 
 
 
-drawCards();
+draw();
 
 
 
-timerID=setInterval(()=>{
+timer=setInterval(()=>{
 
 
-timer++;
+time++;
 
-document.getElementById("time").innerHTML=timer;
+
+document.getElementById("time").innerHTML=time;
 
 
 },1000);
@@ -1147,13 +1013,9 @@ document.getElementById("time").innerHTML=timer;
 
 
 
+function shuffle(arr){
 
-
-function shuffle(array){
-
-
-return array.sort(()=>Math.random()-0.5);
-
+return arr.sort(()=>Math.random()-0.5);
 
 }
 
@@ -1161,46 +1023,18 @@ return array.sort(()=>Math.random()-0.5);
 
 
 
+// ================================
+// 建立牌面
+// ================================
 
 
-// ===============================
-// 建立卡牌
-// ===============================
+function draw(){
 
 
-function drawCards(){
-
-
-let board=document.getElementById("board");
+const board=document.getElementById("board");
 
 
 board.innerHTML="";
-
-
-
-let count=cards.length;
-
-
-
-if(count<=12){
-
-board.style.gridTemplateColumns="repeat(3,1fr)";
-
-}
-
-else if(count<=20){
-
-board.style.gridTemplateColumns="repeat(4,1fr)";
-
-}
-
-else{
-
-board.style.gridTemplateColumns="repeat(5,1fr)";
-
-}
-
-
 
 
 
@@ -1216,33 +1050,20 @@ div.className="memory-card";
 
 div.innerHTML=`
 
-<div class="card-inner">
-
-
-<div class="card-front">
-
+<div class="cover">
 ❓
-
 </div>
 
 
-<div class="card-back">
+<div class="content">
 
-
-<div class="pic">
-
+<div class="icon">
 ${card.icon}
-
 </div>
 
 
 <div class="name">
-
 ${card.name}
-
-</div>
-
-
 </div>
 
 
@@ -1252,17 +1073,11 @@ ${card.name}
 
 
 
-
-div.onclick=function(){
-
-flip(div,card);
-
-};
+div.onclick=()=>flip(div,card);
 
 
 
 board.appendChild(div);
-
 
 
 });
@@ -1276,28 +1091,33 @@ board.appendChild(div);
 
 
 
+function flip(cardElement,card){
 
-
-function flip(element,card){
 
 
 if(lock)
 return;
 
 
-if(element.classList.contains("open"))
+if(cardElement.classList.contains("open"))
 return;
 
 
-
-element.classList.add("open");
+cardElement.classList.add("open");
 
 
 
 if(!first){
 
 
-first={element,card};
+first={
+
+element:cardElement,
+
+card:card
+
+};
+
 
 return;
 
@@ -1306,15 +1126,20 @@ return;
 
 
 
-second={element,card};
+second={
+
+element:cardElement,
+
+card:card
+
+};
+
 
 
 check();
 
 
 }
-
-
 
 
 
@@ -1335,14 +1160,17 @@ second.element.classList.add("match");
 
 
 
-score+=10;
-
 found++;
 
+score+=10;
 
-document.getElementById("score").innerHTML=score;
 
-document.getElementById("found").innerHTML=found;
+document.getElementById("found")
+.innerHTML=found;
+
+
+document.getElementById("score")
+.innerHTML=score;
 
 
 
@@ -1358,12 +1186,9 @@ second=null;
 
 if(found===cards.length/2){
 
-
 finish();
 
-
 }
-
 
 
 }
@@ -1384,6 +1209,7 @@ first.element.classList.remove("open");
 
 second.element.classList.remove("open");
 
+
 first=null;
 
 second=null;
@@ -1392,7 +1218,10 @@ second=null;
 lock=false;
 
 
-},900);
+},800);
+
+
+}
 
 
 
@@ -1400,22 +1229,17 @@ lock=false;
 
 
 
-}
 
 
 
 
 
-
-
-
-// ===============================
+// ================================
 // 教學提示
-// ===============================
+// ================================
 
 
 function showLesson(card){
-
 
 
 document.getElementById("lesson")
@@ -1425,65 +1249,73 @@ document.getElementById("lesson")
 
 <div class="lesson">
 
-✨ 配對成功！
+🎉 找到了！
 
 <br><br>
 
-<b>${card.name}</b>
+<b>
+${card.name}
+</b>
+
 
 <br><br>
+
 
 ${card.lesson}
 
+
 <br><br>
+
 
 📖 ${card.verse}
 
+
 </div>
+
 
 `;
 
-
-
 }
-
-
-
-
-
 
 
 
 function finish(){
 
 
-clearInterval(timerID);
+clearInterval(timer);
 
 
 
 document.getElementById("game")
-.style.display="none";
+.classList.add("hidden");
 
 
 document.getElementById("result")
-.style.display="block";
+.classList.remove("hidden");
 
 
 
-document.getElementById("finalLesson")
+document.getElementById("finalText")
 .innerHTML=
 
 `
 
-🏆 你完成撒迦利亞異象探索！
+🎊 太棒了！
 
 <br><br>
+
+你完成了撒迦利亞書1-8章異象探索。
+
+<br><br>
+
 
 📖 金句：
 
 <br>
 
-「不是倚靠勢力，不是倚靠才能，
+「不是倚靠勢力，
+
+不是倚靠才能，
 
 乃是倚靠我的靈。」
 
@@ -1502,11 +1334,10 @@ document.getElementById("finalLesson")
 
 
 
-
 function restart(){
 
 
-createGame();
+createCards();
 
 
 }
@@ -1514,15 +1345,17 @@ createGame();
 
 
 
+
 function backHome(){
 
 
+
 document.getElementById("result")
-.style.display="none";
+.classList.add("hidden");
 
 
 document.getElementById("home")
-.style.display="block";
+.classList.remove("hidden");
 
 
 }
@@ -1535,3 +1368,4 @@ document.getElementById("home")
 </body>
 
 </html>
+
