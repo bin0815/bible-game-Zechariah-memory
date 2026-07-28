@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>撒迦利亞大冒險</title>
+
+<style>
+
+*{
+ box-sizing:border-box;
+}
+
+body{
+ margin:0;
+ font-family:
+ "Noto Sans TC",
+ "Microsoft JhengHei",
+ sans-serif;
+ background:
+ linear-gradient(#87ceeb,#fff);
+ text-align:center;
+ color:#333;
+}
+
+
+.container{
+ max-width:700px;
+ margin:auto;
+ padding:20px;
+}
+
+
+h1{
+ color:#8b4513;
+ font-size:38px;
+}
+
+
+.card{
+
+background:white;
+border-radius:25px;
+padding:25px;
+margin:20px 0;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.15);
+
+}
+
+
+.character{
+
+font-size:80px;
+
+}
+
+
+button{
+
+background:#f4b400;
+border:none;
+padding:15px 30px;
+
+border-radius:30px;
+
+font-size:20px;
+
+margin:10px;
+
+cursor:pointer;
+
+}
+
+
+button:hover{
+
+background:#ffcc33;
+
+}
+
+
+.hidden{
+
+display:none;
+
+}
+
+
+
+.map{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:15px;
+
+}
+
+
+.stage{
+
+background:#e8f5e9;
+
+border-radius:20px;
+
+padding:20px;
+
+font-size:18px;
+
+}
+
+
+.question{
+
+font-size:22px;
+
+margin:20px;
+
+}
+
+
+.answer{
+
+background:#2196f3;
+
+color:white;
+
+width:90%;
+
+}
+
+
+#score{
+
+font-size:22px;
+
+color:#d2691e;
+
+}
+
+
+
+.badge{
+
+font-size:45px;
+
+}
+
+
+
+footer{
+
+margin-top:30px;
+
+color:#777;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>
+🌟 撒迦利亞大冒險 🌟
+</h1>
+
+
+<div id="home" class="card">
+
+<div class="character">
+👦📖
+</div>
+
+
+<h2>
+尋找神的異象
+</h2>
+
+
+<p>
+
+撒迦利亞先知帶領你，
+
+穿越異象森林，
+
+尋找神的應許！
+
+</p>
+
+
+<p>
+
+⭐ 上篇：1-8章<br>
+
+👑 下篇：9-14章
+
+</p>
+
+
+<button onclick="startGame()">
+
+開始冒險
+
+</button>
+
+
+</div>
+
+
+
+<div id="game" class="hidden">
+
+
+<div class="card">
+
+<span id="player">
+👦 小探險家
+</span>
+
+<br>
+
+<span id="score">
+
+⭐ 0分
+
+</span>
+
+
+</div>
+
+
+
+<div id="map" class="card">
+
+
+<h2>
+🗺 冒險地圖
+</h2>
+
+
+<div class="map">
+
+
+<div class="stage"
+onclick="level(1)">
+❤️ 第一關<br>
+回到神身邊
+</div>
+
+
+<div class="stage"
+onclick="level(2)">
+🌲 第二關<br>
+八個異象森林
+</div>
+
+
+<div class="stage"
+onclick="level(3)">
+🕯 第三關<br>
+金燈台力量
+</div>
+
+
+<div class="stage"
+onclick="level(4)">
+🙏 第四關<br>
+真心敬拜
+</div>
+
+
+<div class="stage"
+onclick="level(5)">
+👑 第五關<br>
+和平君王
+</div>
+
+
+<div class="stage"
+onclick="level(6)">
+🌈 第六關<br>
+神最後得勝
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<div id="mission"
+class="card hidden">
+
+
+<div class="character"
+id="emoji">
+
+</div>
+
+
+<h2 id="title">
+
+</h2>
+
+
+<div id="content">
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+<div id="finish"
+class="card hidden">
+
+
+<h1>
+🎉 恭喜完成！
+</h1>
+
+
+<div class="character">
+👑🕊️
+</div>
+
+
+<p>
+
+你完成了撒迦利亞大冒險！
+
+</p>
+
+
+<p>
+
+神沒有忘記你，
+
+耶穌是永遠的君王。
+
+</p>
+
+
+<div class="badge">
+
+🏅🏅🏅
+
+</div>
+
+
+</div>
+
+
+
+<footer>
+
+主日學教材｜撒迦利亞書
+
+</footer>
+
+
+</div>
+
+
+<script>
+
+let score=0;
+
+let completed=[];
+
+
+function startGame(){
+
+document.getElementById("home")
+.style.display="none";
+
+
+document.getElementById("game")
+.style.display="block";
+
+
+}
+
+
+
+function level(n){
+
+let mission=document.getElementById("mission");
+
+mission.style.display="block";
+
+
+let data={
+
+
+1:{
+emoji:"🐑❤️",
+title:"第一關：回到神身邊",
+text:"撒迦利亞1:3<br><br>你們要轉向我，我就轉向你們。<br><br>小羊迷路了，牠應該去哪裡？",
+answers:[
+["躲起來",false],
+["回到牧羊人身邊",true],
+["繼續亂跑",false]
+]
+},
+
+
+2:{
+emoji:"🌳✨",
+title:"第二關：八個異象森林",
+text:"神透過異象告訴撒迦利亞：神正在做什麼？",
+answers:[
+["忘記百姓",false],
+["看顧並恢復百姓",true],
+["離開世界",false]
+]
+},
+
+
+3:{
+emoji:"🕯️",
+title:"第三關：金燈台力量",
+text:"撒迦利亞4:6<br><br>不是倚靠勢力，不是倚靠才能，乃是倚靠：",
+answers:[
+["金錢",false],
+["神的靈",true],
+["自己的能力",false]
+]
+},
+
+
+4:{
+emoji:"🙏",
+title:"第四關：真心敬拜",
+text:"神喜歡什麼樣的敬拜？",
+answers:[
+["只有外表",false],
+["真心愛神愛人",true],
+["讓別人稱讚",false]
+]
+},
+
+
+5:{
+emoji:"👑🐴",
+title:"第五關：和平君王",
+text:"撒迦利亞9:9預言耶穌如何進耶路撒冷？",
+answers:[
+["騎戰馬",false],
+["騎驢",true],
+["坐黃金車",false]
+]
+},
+
+
+6:{
+emoji:"🌈",
+title:"第六關：神最後得勝",
+text:"最後神的國度會如何？",
+answers:[
+["邪惡勝利",false],
+["神永遠掌權",true],
+["沒有人知道",false]
+]
+}
+
+};
+
+
+let m=data[n];
+
+
+document.getElementById("emoji")
+.innerHTML=m.emoji;
+
+
+document.getElementById("title")
+.innerHTML=m.title;
+
+
+let html="<div class='question'>"+m.text+"</div>";
+
+m.answers.forEach(a=>{
+
+html+=`
+<button class="answer"
+onclick="check(${a[1]},${n})">
+${a[0]}
+</button>
+`;
+
+});
+
+
+document.getElementById("content")
+.innerHTML=html;
+
+
+}
+
+
+function check(ok,n){
+
+if(ok){
+
+score+=10;
+
+alert("🎉 答對了！ 神的話語陪伴你");
+
+}else{
+
+alert("再想想看，神會幫助你！");
+
+}
+
+
+document.getElementById("score")
+.innerHTML="⭐ "+score+"分";
+
+
+if(!completed.includes(n)){
+
+completed.push(n);
+
+}
+
+
+if(completed.length==6){
+
+document.getElementById("mission")
+.style.display="none";
+
+
+document.getElementById("finish")
+.style.display="block";
+
+}
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
