@@ -3,185 +3,272 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>撒迦利亞書記憶對對碰</title>
+
+<title>
+撒迦利亞書大冒險 v1.2
+</title>
 
 <style>
 
 *{
-    box-sizing:border-box;
-    font-family:
-    "Noto Sans TC",
-    "Microsoft JhengHei",
-    sans-serif;
+ box-sizing:border-box;
+ font-family:
+ "Noto Sans TC",
+ "Microsoft JhengHei",
+ sans-serif;
 }
+
 
 body{
-    margin:0;
-    min-height:100vh;
-    background:
-    linear-gradient(
-        180deg,
-        #fff3c4,
-        #ffe7a3
-    );
-    display:flex;
-    justify-content:center;
-    align-items:center;
+
+ margin:0;
+
+ min-height:100vh;
+
+ background:
+ linear-gradient(
+ 180deg,
+ #fff3c4,
+ #ffe0b2
+ );
+
+ display:flex;
+
+ justify-content:center;
+
+ align-items:center;
+
 }
+
 
 .game{
-    width:95%;
-    max-width:600px;
-    text-align:center;
+
+ width:95%;
+
+ max-width:620px;
+
+ text-align:center;
+
 }
+
 
 h1{
-    color:#8b4513;
-    font-size:32px;
-    margin:10px;
+
+ color:#8b4513;
+
+ font-size:32px;
+
+ margin:10px;
+
 }
+
 
 .subtitle{
-    font-size:18px;
-    color:#5d4037;
+
+ color:#5d4037;
+
+ font-size:18px;
+
+ margin-bottom:15px;
+
 }
+
 
 .panel{
-    background:white;
-    border-radius:20px;
-    padding:15px;
-    margin-top:15px;
-    box-shadow:
-    0 5px 15px rgba(0,0,0,.15);
-}
 
+ background:white;
 
-.info{
-    display:flex;
-    justify-content:space-around;
-    font-size:18px;
-    margin-bottom:10px;
-}
+ border-radius:20px;
 
+ padding:20px;
 
-.board{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(3,1fr);
-
-    gap:12px;
-
-}
-
-
-.card{
-
-    height:110px;
-
-    background:#795548;
-
-    border-radius:15px;
-
-    cursor:pointer;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:45px;
-
-    color:white;
-
-    transition:.3s;
-
-    transform-style:preserve-3d;
-
-}
-
-
-.card:hover{
-    transform:scale(1.05);
-}
-
-
-.card.open{
-
-    background:#fff8e1;
-
-    color:#333;
-
-}
-
-
-.card.done{
-
-    background:#81c784;
-
-    color:white;
+ box-shadow:
+ 0 5px 15px rgba(0,0,0,.18);
 
 }
 
 
 button{
 
-    margin-top:15px;
+ border:none;
 
-    padding:12px 30px;
+ border-radius:30px;
 
-    border:none;
+ padding:14px 30px;
 
-    border-radius:30px;
+ margin:8px;
 
-    background:#ff9800;
+ font-size:20px;
 
-    color:white;
+ cursor:pointer;
 
-    font-size:18px;
+ background:#ff9800;
 
-    cursor:pointer;
+ color:white;
 
 }
 
 
 button:hover{
 
-    background:#f57c00;
+ background:#f57c00;
 
 }
 
+
+.easy{
+
+ background:#66bb6a;
+
+}
+
+
+.normal{
+
+ background:#42a5f5;
+
+}
+
+
+.hard{
+
+ background:#ef5350;
+
+}
+
+
+
+.hidden{
+
+ display:none;
+
+}
+
+
+
+/* 遊戲區 */
+
+
+.info{
+
+ display:flex;
+
+ justify-content:space-around;
+
+ font-size:18px;
+
+ margin-bottom:15px;
+
+}
+
+
+.board{
+
+ display:grid;
+
+ gap:12px;
+
+}
+
+
+.board.easy{
+
+ grid-template-columns:
+ repeat(3,1fr);
+
+}
+
+
+.board.normal{
+
+ grid-template-columns:
+ repeat(3,1fr);
+
+}
+
+
+.board.hard{
+
+ grid-template-columns:
+ repeat(3,1fr);
+
+}
+
+
+
+.card{
+
+ height:110px;
+
+ background:#795548;
+
+ border-radius:15px;
+
+ display:flex;
+
+ align-items:center;
+
+ justify-content:center;
+
+ font-size:45px;
+
+ color:white;
+
+ cursor:pointer;
+
+ transition:.3s;
+
+}
+
+
+.card.open{
+
+ background:#fff8e1;
+
+ color:#333;
+
+}
+
+
+.card.done{
+
+ background:#81c784;
+
+}
 
 
 .message{
 
-    display:none;
+ margin-top:20px;
 
-    font-size:20px;
+ padding:15px;
 
-    color:#6a1b9a;
+ border-radius:15px;
 
-    line-height:1.6;
+ background:#fff3e0;
+
+ color:#6a1b9a;
+
+ font-size:20px;
+
+ line-height:1.6;
 
 }
-
 
 
 @media(max-width:400px){
 
 .card{
 
-height:90px;
+ height:85px;
 
-font-size:38px;
+ font-size:35px;
 
 }
 
 h1{
 
-font-size:26px;
+ font-size:26px;
 
 }
 
@@ -199,17 +286,92 @@ font-size:26px;
 <div class="game">
 
 
+<!-- 首頁 -->
+
+<div id="home">
+
+
 <h1>
+
 🐴 撒迦利亞書<br>
-記憶對對碰
+大冒險 v1.2
+
 </h1>
 
 
 <div class="subtitle">
 
-找出神給撒迦利亞的異象！
+發現神給撒迦利亞的異象！
 
 </div>
+
+
+<div class="panel">
+
+
+<h2>
+
+🃏 記憶對對碰
+
+</h2>
+
+
+<p>
+
+請選擇挑戰難度
+
+</p>
+
+
+<button
+class="easy"
+onclick="startGame('easy')">
+
+🌱 簡單<br>
+6張卡
+
+</button>
+
+
+<button
+class="normal"
+onclick="startGame('normal')">
+
+⭐ 普通<br>
+12張卡
+
+</button>
+
+
+<button
+class="hard"
+onclick="startGame('hard')">
+
+🔥 挑戰<br>
+18張卡
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- 遊戲 -->
+
+<div id="gamePage" class="hidden">
+
+
+<h1>
+
+🃏 記憶對對碰
+
+</h1>
 
 
 <div class="panel">
@@ -218,53 +380,50 @@ font-size:26px;
 <div class="info">
 
 <div>
+
 ⭐ 分數：
 <span id="score">
 0
 </span>
+
 </div>
 
 
 <div>
+
 🔄 次數：
 <span id="count">
 0
 </span>
-</div>
-
 
 </div>
 
 
+</div>
 
-<div class="board" id="board">
+
+<div id="board"
+class="board">
 
 </div>
 
 
-
-<button onclick="restart()">
+<button onclick="restartGame()">
 
 重新開始
 
 </button>
 
 
+<button onclick="backHome()">
 
-<div class="message" id="message">
+返回首頁
 
-🎉 恭喜完成！<br><br>
-
-你發現了撒迦利亞的異象！<br>
-
-神記念祂的百姓，<br>
-也與我們同在。<br><br>
+</button>
 
 
-📖 撒迦利亞書 4:6<br>
-
-「不是倚靠勢力，不是倚靠才能，
-乃是倚靠我的靈方能成事。」
+<div id="message"
+class="message hidden">
 
 </div>
 
@@ -274,128 +433,99 @@ font-size:26px;
 
 </div>
 
+
+</div>
 
 
 <script>
 
 
-// ===========================
-// 撒迦利亞卡片資料
-// ===========================
+// ================================
+// 撒迦利亞異象資料
+// ================================
 
 
-const cardsData=[
-
+const themes = [
 
 {
-id:1,
 icon:"🐴",
-text:"馬匹",
-info:"神看顧祂的百姓"
+name:"馬匹",
+text:"神看顧祂的百姓",
+verse:"撒迦利亞書 1章"
 },
 
-
 {
-id:1,
-icon:"📖",
-text:"第一異象",
-info:"撒迦利亞書1章"
-},
-
-
-
-{
-id:2,
 icon:"📏",
-text:"量繩",
-info:"神保護耶路撒冷"
+name:"量繩",
+text:"神保護耶路撒冷",
+verse:"撒迦利亞書 2章"
 },
 
-
 {
-id:2,
-icon:"🏙️",
-text:"耶路撒冷",
-info:"神與百姓同住"
-},
-
-
-
-{
-id:3,
 icon:"👕",
-text:"大祭司",
-info:"神除去罪惡"
+name:"大祭司",
+text:"神除去罪惡",
+verse:"撒迦利亞書 3章"
 },
 
-
 {
-id:3,
-icon:"✨",
-text:"潔淨",
-info:"神赦免祂的百姓"
-},
-
-
-
-{
-id:4,
 icon:"🕯️",
-text:"金燈臺",
-info:"靠神的靈"
+name:"金燈臺",
+text:"不是倚靠勢力，乃是倚靠神的靈",
+verse:"撒迦利亞書 4:6"
 },
 
-
 {
-id:4,
-icon:"💡",
-text:"聖靈",
-info:"不是靠自己"
-},
-
-
-
-{
-id:5,
 icon:"📜",
-text:"飛行書卷",
-info:"神喜愛公義"
+name:"飛行書卷",
+text:"神喜愛公義",
+verse:"撒迦利亞書 5章"
 },
 
-
 {
-id:5,
-icon:"⚖️",
-text:"公義",
-info:"神審判罪惡"
-},
-
-
-
-{
-id:6,
 icon:"👑",
-text:"君王",
-info:"和平的君王"
+name:"君王",
+text:"和平的君王",
+verse:"撒迦利亞書 9章"
 },
 
+{
+icon:"🕊️",
+name:"橄欖樹",
+text:"神賜下恩典",
+verse:"撒迦利亞書 4章"
+},
 
 {
-id:6,
-icon:"🕊️",
-text:"彌賽亞",
-info:"神應許救主"
+icon:"🏛️",
+name:"聖殿",
+text:"神與百姓同在",
+verse:"撒迦利亞書 6章"
+},
+
+{
+icon:"⭐",
+name:"盼望",
+text:"神的應許永不改變",
+verse:"撒迦利亞書"
 }
-
-
 
 ];
 
 
 
-let first=null;
+// ================================
+// 遊戲變數
+// ================================
 
-let second=null;
+
+let level="normal";
+
+let cards=[];
+
+let firstCard=null;
+
+let secondCard=null;
 
 let lock=false;
 
@@ -403,21 +533,163 @@ let score=0;
 
 let count=0;
 
-let complete=0;
+let matched=0;
+
+let totalPairs=0;
 
 
 
-function shuffle(array){
+// ================================
+// 開始遊戲
+// ================================
 
-return array.sort(
-()=>Math.random()-0.5
-);
+
+function startGame(mode){
+
+
+level=mode;
+
+
+document
+.getElementById("home")
+.classList.add("hidden");
+
+
+document
+.getElementById("gamePage")
+.classList.remove("hidden");
+
+
+
+createCards();
+
 
 }
 
 
 
-function createBoard(){
+// ================================
+// 建立卡片
+// ================================
+
+
+function createCards(){
+
+
+let amount;
+
+
+
+if(level==="easy"){
+
+amount=3;
+
+}
+
+
+else if(level==="normal"){
+
+amount=6;
+
+}
+
+
+else{
+
+amount=9;
+
+}
+
+
+
+totalPairs=amount;
+
+
+
+let selected=
+themes.slice(0,amount);
+
+
+
+cards=[];
+
+
+
+selected.forEach(item=>{
+
+
+// 每一組建立完全相同圖案兩張
+
+
+cards.push({
+
+id:item.name,
+
+icon:item.icon,
+
+name:item.name,
+
+text:item.text,
+
+verse:item.verse
+
+});
+
+
+cards.push({
+
+id:item.name,
+
+icon:item.icon,
+
+name:item.name,
+
+text:item.text,
+
+verse:item.verse
+
+});
+
+
+});
+
+
+
+cards=shuffle(cards);
+
+
+
+showCards();
+
+
+}
+
+
+
+// ================================
+// 洗牌
+// ================================
+
+
+function shuffle(array){
+
+
+return array.sort(
+()=>Math.random()-0.5
+);
+
+
+}
+
+
+
+
+// ================================
+// 顯示卡片
+// ================================
+
+
+function showCards(){
 
 
 const board=
@@ -427,8 +699,12 @@ document.getElementById("board");
 board.innerHTML="";
 
 
-shuffle([...cardsData])
-.forEach(card=>{
+board.className=
+"board "+level;
+
+
+
+cards.forEach(card=>{
 
 
 let div=
@@ -446,15 +722,28 @@ div.dataset.icon=
 card.icon;
 
 
-div.dataset.info=
-card.info;
+div.dataset.name=
+card.name;
+
+
+div.dataset.text=
+card.text;
+
+
+div.dataset.verse=
+card.verse;
+
 
 
 div.innerHTML="❓";
 
 
-div.onclick=
-()=>flip(div);
+
+div.onclick=function(){
+
+flipCard(div);
+
+};
 
 
 
@@ -468,7 +757,13 @@ board.appendChild(div);
 
 
 
-function flip(card){
+
+// ================================
+// 翻牌
+// ================================
+
+
+function flipCard(card){
 
 
 if(lock)
@@ -492,82 +787,114 @@ card.dataset.icon;
 
 
 
-if(!first){
+if(!firstCard){
 
-first=card;
+
+firstCard=card;
+
 
 return;
+
 
 }
 
 
 
-second=card;
+secondCard=card;
+
 
 count++;
 
-document.getElementById("count")
+
+document
+.getElementById("count")
 .innerHTML=count;
 
 
 
-check();
+checkMatch();
+
 
 
 }
-// ===========================
+
+
+
+// ================================
 // 判斷配對
-// ===========================
+// ================================
 
 
-function check(){
+function checkMatch(){
 
 
 lock=true;
 
 
 
-if(first.dataset.id===second.dataset.id){
-
-
-    first.classList.add("done");
-
-    second.classList.add("done");
-
-
-    score+=10;
-
-
-    document.getElementById("score")
-    .innerHTML=score;
+if(
+firstCard.dataset.id===
+secondCard.dataset.id
+){
 
 
 
-    complete++;
+firstCard.classList.add("done");
 
-
-    showHint(
-        "🎉 答對了！\n"+
-        first.dataset.info
-    );
+secondCard.classList.add("done");
 
 
 
-    resetTurn();
+score+=10;
+
+
+matched++;
 
 
 
-    if(complete===6){
-
-        setTimeout(()=>{
-
-            document.getElementById("message")
-            .style.display="block";
+document
+.getElementById("score")
+.innerHTML=score;
 
 
-        },500);
 
-    }
+showMessage(
+
+"🎉 找到了！<br><br>"+
+firstCard.dataset.icon+
+" "+
+firstCard.dataset.name+
+"<br>"+
+firstCard.dataset.text+
+"<br>"+
+firstCard.dataset.verse
+
+);
+
+
+
+resetTurn();
+
+
+
+if(matched===totalPairs){
+
+
+setTimeout(()=>{
+
+showMessage(
+
+"🏆 恭喜完成全部異象！<br><br>"+
+"神記念祂的百姓，<br>"+
+"也與我們同在。"
+
+);
+
+
+},600);
+
+
+}
 
 
 
@@ -575,79 +902,29 @@ if(first.dataset.id===second.dataset.id){
 else{
 
 
-    setTimeout(()=>{
-
-
-        first.classList.remove("open");
-
-        second.classList.remove("open");
-
-        first.innerHTML="❓";
-
-        second.innerHTML="❓";
-
-
-        resetTurn();
-
-
-    },900);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-// ===========================
-// 小提示
-// ===========================
-
-
-function showHint(text){
-
-
-let old=
-document.getElementById("hint");
-
-
-if(old)
-old.remove();
-
-
-
-let div=
-document.createElement("div");
-
-
-div.id="hint";
-
-
-div.style.marginTop="10px";
-
-div.style.color="#795548";
-
-div.style.fontSize="18px";
-
-div.innerText=text;
-
-
-
-document.querySelector(".panel")
-.appendChild(div);
-
-
 
 setTimeout(()=>{
 
-div.remove();
 
-},2500);
+firstCard.classList.remove("open");
+
+secondCard.classList.remove("open");
+
+
+firstCard.innerHTML="❓";
+
+secondCard.innerHTML="❓";
+
+
+resetTurn();
+
+
+
+},900);
+
+
+
+}
 
 
 
@@ -656,56 +933,50 @@ div.remove();
 
 
 
-
-// ===========================
-// 重置翻牌狀態
-// ===========================
+// ================================
+// 重置翻牌
+// ================================
 
 
 function resetTurn(){
 
 
-first=null;
+firstCard=null;
 
-second=null;
+secondCard=null;
 
 lock=false;
 
 
 }
 
+// ================================
+// 顯示訊息
+// ================================
+
+
+function showMessage(text){
+
+
+const box=
+document.getElementById("message");
+
+
+box.innerHTML=text;
+
+
+box.classList.remove("hidden");
 
 
 
-
-// ===========================
-// 重新開始
-// ===========================
+setTimeout(()=>{
 
 
-function restart(){
+box.classList.add("hidden");
 
 
-score=0;
+},3500);
 
-count=0;
-
-complete=0;
-
-
-document.getElementById("score")
-.innerHTML=0;
-
-
-document.getElementById("count")
-.innerHTML=0;
-
-
-document.getElementById("message")
-.style.display="none";
-
-
-createBoard();
 
 
 }
@@ -714,12 +985,103 @@ createBoard();
 
 
 
-// ===========================
-// 啟動遊戲
-// ===========================
+// ================================
+// 重新開始
+// ================================
 
 
-createBoard();
+function restartGame(){
+
+
+score=0;
+
+count=0;
+
+matched=0;
+
+firstCard=null;
+
+secondCard=null;
+
+lock=false;
+
+
+
+document
+.getElementById("score")
+.innerHTML=0;
+
+
+document
+.getElementById("count")
+.innerHTML=0;
+
+
+
+createCards();
+
+
+
+document
+.getElementById("message")
+.classList.add("hidden");
+
+
+}
+
+
+
+
+
+// ================================
+// 返回首頁
+// ================================
+
+
+function backHome(){
+
+
+document
+.getElementById("gamePage")
+.classList.add("hidden");
+
+
+document
+.getElementById("home")
+.classList.remove("hidden");
+
+
+
+score=0;
+
+count=0;
+
+matched=0;
+
+
+}
+
+
+
+// ================================
+// 防止重新整理空白
+// ================================
+
+
+window.onload=function(){
+
+
+document
+.getElementById("home")
+.classList.remove("hidden");
+
+
+document
+.getElementById("gamePage")
+.classList.add("hidden");
+
+
+};
 
 
 
@@ -729,3 +1091,4 @@ createBoard();
 </body>
 
 </html>
+
